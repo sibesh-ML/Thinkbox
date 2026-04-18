@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-navy-900: #0a0e1a;
+  --color-navy-800: #111827;
+  --color-navy-700: #1a2332;
+  --color-navy-600: #243044;
+
+  --color-accent: #64ffda;
+  --color-accent-dim: #3d9980;
+
+  --font-sans: Inter, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-navy-900 text-gray-100 font-sans;
+  }
+}
