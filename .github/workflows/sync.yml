@@ -3,24 +3,23 @@ name: Sync to Private Repo
 on:
   push:
     branches:
-      - main # Change this to 'master' if your default branch is master
+      - main
 
 jobs:
-  sync-code:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Public Repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # This fetches the full history so we can push it
 
-      - name: Push code to Private Repo
-        uses: cpina/github-action-push-to-another-repository@main
+      - name: Force Push to Private Mirror
         env:
-          API_TOKEN_GITHUB: ${{ secrets.SYNC_TOKEN }}
-        with:
-          source-directory: '.' 
-          destination-github-username: 'sibesh-ML'            # <-- Updated this!
-          destination-repository-name: 'thinkbox-web'         
-          user-email: 'sibesh1998@gmail.com'           # <-- Make sure to update this too!
-          target-branch: 'main'
+          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          # Add the private repository as a remote destination using your token
+          git remote add private https://sibesh-ML:${SYNC_TOKEN}@github.com/sibesh-ML/thinkbox-web.git
+          
+          # Force push the code to make the private repo an exact 1:1 match
+          git push -f private main
