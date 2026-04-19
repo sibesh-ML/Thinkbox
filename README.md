@@ -15,4 +15,4 @@ Then open http://localhost:3000.
 
 ## Deployment
 
-Deployed to Vercel. The site is behind a password gate — set the `PASSWORD` environment variable in Vercel project settings.
+Run it on your local by cloning the repo and running the dev server.
