@@ -18,13 +18,13 @@ jobs:
 
       - name: Clone target repo
         run: |
-          git clone https://github.com/sibesh-ML/thinkbox-web.git target
+          git clone https://x-access-token:${{ github.token }}@github.com/sibesh-ML/thinkbox-web.git target
 
       - name: Sync files
         run: |
           rsync -av --delete --exclude='.git' ./ target/
 
-      - name: Push changes
+      - name: Commit and push
         run: |
           cd target
           git config user.name "github-actions"
