@@ -58,3 +58,11 @@ export const trackData: Record<string, TrackData> = {
     problems: integrationIntegrationProblems,
   },
 };
+
+export const allProblems: Problem[] = Object.values(trackData).flatMap(
+  (t) => t.problems,
+);
+
+export const problemsById: Record<string, Problem> = Object.fromEntries(
+  allProblems.map((p) => [p.id, p]),
+);

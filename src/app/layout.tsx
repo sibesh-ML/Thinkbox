@@ -5,6 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "ThinkBox — Analytical Thinking Platform",
   description: "Master guesstimation, problem structuring, and analytical thinking from scratch",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
