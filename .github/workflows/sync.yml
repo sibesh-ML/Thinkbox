@@ -20,7 +20,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.SYNC_TOKEN }}
         with:
           source-directory: '.' 
-          destination-github-username: 'YOUR_GITHUB_USERNAME' # <-- CHANGE THIS
-          destination-repository-name: 'thinkbox-web'         # <-- CHANGE THIS IF NEEDED
-          user-email: 'your-email@example.com'                # <-- CHANGE THIS
-          target-branch: 'main'                               # Change to 'master' if needed
+          destination-github-username: 'sibesh-ML'            # <-- Updated this!
+          destination-repository-name: 'thinkbox-web'         
+          user-email: 'sibesh1998@gmail.com'           # <-- Make sure to update this too!
+          target-branch: 'main'
