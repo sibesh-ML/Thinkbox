@@ -12,14 +12,13 @@ jobs:
       - name: Checkout Public Repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # This fetches the full history so we can push it
+          fetch-depth: 0 
+          token: ${{ secrets.SYNC_TOKEN }} # <-- We inject the token here instead!
 
       - name: Force Push to Private Mirror
-        env:
-          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          # Add the private repository as a remote destination using your token
-          git remote add private https://sibesh-ML:${SYNC_TOKEN}@github.com/sibesh-ML/thinkbox-web.git
+          # Because we injected the token above, Git is already authenticated!
+          # We just use the normal URL now.
+          git remote add private https://github.com/sibesh-ML/thinkbox-web.git
           
-          # Force push the code to make the private repo an exact 1:1 match
           git push -f private main
