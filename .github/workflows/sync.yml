@@ -1,34 +1,26 @@
-name: Sync to thinkbox-web
+name: Sync to Private Repo
 
 on:
   push:
     branches:
-      - main
-
-permissions:
-  contents: write
+      - main # Change this to 'master' if your default branch is master
 
 jobs:
-  sync:
+  sync-code:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source repo
-        uses: actions/checkout@v3
+      - name: Checkout Public Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Clone target repo
-        run: |
-          git clone https://x-access-token:${{ github.token }}@github.com/sibesh-ML/thinkbox-web.git target
-
-      - name: Sync files
-        run: |
-          rsync -av --delete --exclude='.git' ./ target/
-
-      - name: Commit and push
-        run: |
-          cd target
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add .
-          git commit -m "Sync from thinkbox" || echo "No changes"
-          git push https://x-access-token:${{ github.token }}@github.com/sibesh-ML/thinkbox-web.git
+      - name: Push code to Private Repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.SYNC_TOKEN }}
+        with:
+          source-directory: '.' 
+          destination-github-username: 'YOUR_GITHUB_USERNAME' # <-- CHANGE THIS
+          destination-repository-name: 'thinkbox-web'         # <-- CHANGE THIS IF NEEDED
+          user-email: 'your-email@example.com'                # <-- CHANGE THIS
+          target-branch: 'main'                               # Change to 'master' if needed
