@@ -1,0 +1,28 @@
+name: Sync to thinkbox-web
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v3
+
+      - name: Sync to target repo
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/sibesh-ML/thinkbox-web.git target
+
+          rsync -av --delete --exclude='.git' ./ target/
+
+          cd target
+          git add .
+          git commit -m "Sync from thinkbox" || echo "No changes"
+          git push
